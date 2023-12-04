@@ -1,0 +1,108 @@
+import java.io.*;
+public class FileHandling {
+    public static void main(String[] args) throws IOException {
+        String inputFile = "input.txt";
+        String outputFile = "output.txt";
+
+        try {
+            FileInputStream input = new FileInputStream(inputFile);
+            FileOutputStream output = new FileOutputStream(outputFile);
+            int c;
+            while ((c=input.read()) != -1) {
+                output.write(c);
+            }
+            input.close();
+            output.close();
+            System.out.println("File content copied successfully");
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("File not found: " + e.getMessage());
+        }
+    }
+}
+
+
+
+_____________________________________
+
+
+import java.io.*;
+public class FileHandling {
+    public static void main(String[] args) {
+        String inputFile = "input.txt";
+        String outputFile = "output.txt";
+        try {
+            FileReader reader = new FileReader(inputFile);
+            FileWriter writer = new FileWriter(outputFile);
+            int character=0;
+            while ((character=reader.read()) != -1) {
+                writer.write(character);
+            }
+            reader.close();
+            writer.close();
+            System.out.println("File content copied successfully");
+        }
+        catch (IOException e) {
+            System.out.println("An error occurred during file handling: " + e.getMessage());
+        }
+    }
+}
+
+
+___________________________________
+
+import java.io.*;
+
+public class FileNumbers {
+    public static void main(String[] args) {
+        String file = "input.txt";
+        try {
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+            int charCount = 0, lines = 0, words = 0;
+            String line;
+            while ((line = br.readLine()) != null) {
+                charCount += line.length();
+                lines++;
+                String[] str = line.split("\\s");
+                words += str.length;
+            }
+            fr.close();
+            br.close();
+            System.out.println("Number of characters: " + charCount);
+            System.out.println("Number of lines: " + lines);
+            System.out.println("Number of words: " + words);
+
+        }
+        catch (IOException e) {
+            System.out.println("An error occurred during file reading: " + e.getMessage());
+        }
+    }
+}
+
+
+___________________________________
+
+
+import java.io.*;
+
+public class DisplayFile {
+    public static void main(String[] args) throws IOException{
+        String file = "input.txt"; 
+        try {
+            FileReader fr=new FileReader(file);
+            BufferedReader br=new BufferedReader(fr);
+            int lineNumber = 1;
+            String line;
+            while ((line = br.readLine()) != null) {
+                System.out.println("Line " + lineNumber + ": " + line);
+                lineNumber++;
+            }
+            fr.close();
+            br.close();
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("File not found: " + e.getMessage());
+        }
+    }
+}
