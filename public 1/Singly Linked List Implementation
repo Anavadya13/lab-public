@@ -1,0 +1,226 @@
+Singly Linked List Implementation
+August 06, 2020
+Singly Linked List
+
+/**************************************************************************/
+
+#include<stdio.h>
+#include<stdlib.h>
+struct Node
+{
+ int data;
+ struct Node *next;
+}*head=NULL,*tail=NULL,*temp=NULL,*trav=NULL,*prev=NULL;
+void create()
+{
+ temp=(struct Node*)malloc(sizeof(struct Node));
+ printf("Enter data:");
+ scanf("%d",&temp->data);
+ temp->next=NULL;
+ if(head==NULL)
+ {
+  head=temp;
+  tail=temp;
+ }
+ else
+ {
+  tail->next=temp;
+  tail=temp;
+ }
+}
+
+void display()
+{
+ temp=head;
+ while(temp!=NULL)
+ {
+  printf(" %d---->",temp->data);
+  temp=temp->next;
+ }
+ printf(" NULL");
+} 
+void insert_begin() 
+{ 
+    temp=(struct Node*)malloc(sizeof(struct Node)); 
+    printf("Enter data:"); 
+    scanf("%d",&temp->data); 
+    temp->next=NULL; 
+    if(head==NULL) 
+    {
+        head=temp; 
+        tail=temp; 
+    } 
+    else 
+    { 
+        temp->next=head; 
+        head=temp; 
+    }
+    } 
+    void insert_at_end() 
+{ 
+    temp=(struct Node*)malloc(sizeof(struct Node)); 
+    printf("Enter data:"); 
+    scanf("%d",&temp->data); 
+    temp->next=NULL; 
+    if(head==NULL) 
+    {
+        head=temp; 
+        tail=temp; 
+    } 
+else 
+    {  
+        tail->next=temp;
+        tail=temp; 
+    }
+    } 
+    void insert_at_pos() 
+{  
+    int pos,i=0;
+    
+    printf("Enter the position:"); 
+    scanf("%d",&pos); 
+    if(pos==0) 
+    {
+     insert_begin();
+    }
+    else 
+    {   prev=NULL;
+        trav=head;
+        for(i=0;i<pos;i++) 
+        { 
+            prev=trav;
+            trav=trav->next; 
+        } 
+        if(trav==NULL) 
+        { 
+            insert_at_end(); 
+        } 
+        else 
+        { 
+            temp=(struct Node*)malloc(sizeof(struct Node)); 
+            printf("Enter data:"); 
+           scanf("%d",&temp->data); 
+          temp->next=NULL; 
+        prev->next=temp; 
+        temp->next=trav;
+        }
+    }
+    } 
+    void del_from_begin() 
+    {  
+        if(head==NULL)
+        { 
+            printf("List is empty"); 
+        }
+        else 
+        {
+        trav=head;
+        head=head->next;
+        trav->next=NULL; 
+        free(trav); 
+        }
+    } 
+    void del_from_end()
+    { 
+        if(head==NULL)
+        { 
+            printf("List is empty"); 
+        }
+        else 
+        { 
+            prev=NULL;
+            trav=head; 
+            while(trav->next!=NULL) 
+            { 
+                prev=trav;
+                trav=trav->next; 
+            } 
+            prev->next=NULL; 
+            tail=prev; 
+            free(trav); 
+        }
+    } 
+    void del_from_pos()
+    { 
+        int pos,i=0;
+    
+    printf("Enter the position:"); 
+    scanf("%d",&pos); 
+    if(pos==0) 
+    {
+     del_from_begin();
+    }
+    else 
+    {   prev=NULL;
+        trav=head;
+        for(i=0;i<pos;i++) 
+        { 
+            prev=trav;
+            trav=trav->next; 
+        } 
+        if(trav==NULL) 
+        { 
+            printf("position beyond list");
+        } 
+        else if(trav->next==NULL)
+        { 
+            
+        del_from_end();
+        } 
+        else 
+        { 
+            if(head==NULL) 
+            { 
+                printf("List is empty"); 
+            }
+            else
+            {
+            prev->next=trav->next; 
+            free(trav); 
+            }
+        }
+    } 
+    }
+void main()
+{
+ int ch;
+ do
+ {
+  printf("\nMenu\n----\n1. Create\n2. Display\n3. Insert At Beginning\n4. Insert At End\n5. Insert At a Specified Position\n6. Delete From Beginning\n7. Delete From End\n8. Delete From a Specified Position\n9. Exit");
+  printf("\nEnter the choice:");
+  scanf("%d",&ch);
+  switch(ch)
+  {
+   case 1:
+    create();
+    break;
+   case 2:
+    display();
+    break;
+   case 3: 
+   insert_begin(); 
+   break; 
+   case 4: 
+   insert_at_end(); 
+   break;
+   case 5: 
+   insert_at_pos(); 
+   break; 
+   case 6: 
+   del_from_begin(); 
+   break; 
+   case 7: 
+   del_from_end();
+   break;
+   case 8:
+   del_from_pos();
+   break;
+   case 9:
+   exit(0); 
+      default:
+    printf("There is no such operation:");
+  }
+ }
+ while(1);
+}
+
