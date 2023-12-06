@@ -1,0 +1,332 @@
+Double Ended Queue
+August 06, 2020
+Double Ended Queues
+
+C Program- Double ended queue using arrays
+/***********************************************************************/
+#include<stdio.h>
+#include<stdlib.h>
+#define MAX 10
+ 
+int deque_arr[MAX];
+int front=-1;
+int rear=-1;
+ 
+void insertFront(int item);
+void insertRear(int item);
+int deleteFront();
+int deleteRear();
+void display();
+int isEmpty();
+int isFull();
+ 
+int main()
+{
+        int choice,item;
+        while(1)
+        {
+                printf("\n\n1.Insert at the front end\n");
+                printf("2.Insert at the rear end\n");
+                printf("3.Delete from front end\n");
+                printf("4.Delete from rear end\n");
+                printf("5.Display\n");
+                printf("6.Quit\n");
+                printf("\nEnter your choice : ");
+                scanf("%d",&choice);
+ 
+                switch(choice)
+                {
+                case 1:
+                        printf("\nInput the element for adding in queue : ");
+                        scanf("%d",&item);
+                        insertFront(item);
+                        break;
+                case 2:
+                        printf("\nInput the element for adding in queue : ");
+                        scanf("%d",&item);
+                        insertRear(item);
+                        break;
+                 case 3:item=deleteFront();
+                        if(item!=-1)
+                            printf("\nElement deleted from front end is : %d\n",item);
+                        break;
+                 case 4:
+                        item=deleteRear();
+                        if(item!=-1)
+                            printf("\nElement deleted from rear end is : %d\n",item);
+                        break;
+                 case 5:
+                        display();
+                        break;
+                 case 6:
+                        exit(1);
+                 default:
+                        printf("\nWrong choice\n");
+                }/*End of switch*/
+                printf("\nfront = %d, rear =%d\n", front , rear);
+                display();
+        }/*End of while*/
+}/*End of main()*/
+ 
+void insertFront(int item)
+{
+        if( isFull() )
+        {
+                printf("\nQueue Overflow\n");
+                return;
+        }
+        if( front==-1 )/*If queue is initially empty*/
+        {
+                front=0;
+                rear=0;
+        }
+        else if(front==0)
+                front=MAX-1;
+        else
+                front=front-1;
+        deque_arr[front]=item ;
+}/*End of insert_frontEnd()*/
+ 
+void insertRear(int item)
+{
+        if( isFull() )
+        {
+                printf("\nQueue Overflow\n");
+                return;
+        }
+        if(front==-1)  /*if queue is initially empty*/
+        {
+                front=0;
+                rear=0;
+        }
+        else if(rear==MAX-1)  /*rear is at last position of queue */
+                rear=0;
+        else
+                rear=rear+1;
+        deque_arr[rear]=item ;
+}/*End of insert_rearEnd()*/
+ 
+int deleteFront()
+{
+        int item;
+        if( isEmpty() )
+        {
+                printf("\nQueue Underflow\n");
+                return -1;
+        }
+        item=deque_arr[front];
+        if(front==rear) /*Queue has only one element */
+        {
+                front=-1;
+                rear=-1;
+        }
+        else
+                if(front==MAX-1)
+                        front=0;
+                else
+                        front=front+1;
+        return item;
+}/*End of deleteFront()*/
+ 
+int deleteRear()
+{
+        int item;
+        if( isEmpty() )
+        {
+                printf("\nQueue Underflow\n");
+                return -1;
+        }
+        item=deque_arr[rear];
+ 
+        if(front==rear) /*queue has only one element*/
+        {
+                front=-1;
+                rear=-1;
+        }
+        else if(rear==0)
+                rear=MAX-1;
+        else
+                rear=rear-1;
+        return item;
+}/*End of delete_rearEnd() */
+ 
+int isFull()
+{
+        if ( (front==0 && rear==MAX-1) || (front==rear+1) )
+                return 1;
+        else
+                return 0;
+}/*End of isFull()*/
+ 
+int isEmpty()
+{
+        if( front == -1)
+                return 1;
+        else
+                return 0;
+}/*End of isEmpty()*/
+ 
+void display()
+{
+        int i;
+        if( isEmpty() )
+        {
+                printf("\nQueue is empty\n");
+                return;
+        }
+        printf("\nQueue elements :\n");
+        i=front;
+        if( front<=rear )
+        {
+                while(i<=rear)
+                        printf("%d ",deque_arr[i++]);
+        }
+        else
+        {
+                while(i<=MAX-1)
+                        printf("%d ",deque_arr[i++]);
+                i=0;
+                while(i<=rear)
+                        printf("%d ",deque_arr[i++]);
+        }
+        printf("\n");
+}/*End of display() */
+
+C Program- double ended queue using linked list
+/*********************************************************************/
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+struct Node* front = NULL;
+struct Node* rear = NULL;
+
+void insertFront(int x) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = x;
+    newNode->next = front;
+    front = newNode;
+    if (rear == NULL) {
+        rear = front;
+    }
+}
+
+void insertRear(int x) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = x;
+    newNode->next = NULL;
+    if (rear == NULL) {
+        front = rear = newNode;
+            }
+    else{
+    rear->next = newNode;
+    rear = newNode;
+    }
+}
+
+int deleteFront() {
+    if (front == NULL) {
+        printf("Queue is Empty\n");
+        return -1;
+    }
+    struct Node* temp = front;
+    int x=front->data;
+    front = front->next;
+    if (front == NULL) {
+        rear = NULL;
+    }
+    free(temp);
+    return(x);
+}
+
+int deleteRear() {
+    int x;
+    if (rear == NULL) {
+        printf("Queue is Empty\n");
+        return -1;
+    }
+    if (front==rear)
+        {
+            struct Node* temp = rear;
+            x=rear->data;
+            front=rear=NULL;
+            free(temp);
+            return x;
+        }
+    struct Node* temp = front;
+    while (temp->next != rear) {
+        temp = temp->next;
+    }
+    x=rear->data;
+    rear = temp;
+    rear->next = NULL;
+    temp=temp->next;
+    free(temp);
+    return x;
+}
+
+void display() {
+    if (front == NULL) {
+        printf("Queue is Empty\n");
+        }
+    else{
+    struct Node* temp = front;
+    while (temp != NULL) {
+        printf("%d-->", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+    }
+}
+
+int main() 
+{
+     int choice,item;
+        while(1)
+        {
+                printf("\n\n1.Insert at the front end\n");
+                printf("2.Insert at the rear end\n");
+                printf("3.Delete from front end\n");
+                printf("4.Delete from rear end\n");
+                printf("5.Display\n");
+                printf("6.Quit\n");
+                printf("\nEnter your choice : ");
+                scanf("%d",&choice);
+ 
+                switch(choice)
+                {
+                case 1:
+                        printf("\nInput the element for adding in queue : ");
+                        scanf("%d",&item);
+                        insertFront(item);
+                        break;
+                case 2:
+                        printf("\nInput the element for adding in queue : ");
+                        scanf("%d",&item);
+                        insertRear(item);
+                        break;
+                 case 3:
+                        item=deleteFront();
+                        if(item!=-1)
+                        printf("\nElement deleted from front end is : %d\n",item);
+                        break;
+                 case 4:
+                        item=deleteRear();
+                        if(item!=-1)
+                        printf("\nElement deleted from rear end is : %d\n",item);
+                        break;
+                 case 5:
+                        display();
+                        break;
+                 case 6:
+                        exit(1);
+                 default:
+                        printf("\nWrong choice\n");
+                }/*End of switch*/
+               
+        }/*End of while*/
+}/*End of main()*/
