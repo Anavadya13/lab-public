@@ -21,6 +21,7 @@ public class FileHandling {
     }
 }
 
+COPING A FILE
 
 
 _____________________________________
@@ -48,6 +49,7 @@ public class FileHandling {
     }
 }
 
+COPING A FILE
 
 ___________________________________
 
@@ -80,7 +82,7 @@ public class FileNumbers {
     }
 }
 
-
+//NO OF LINES,WORDS,CHARACTERS
 ___________________________________
 
 
@@ -106,3 +108,6 @@ public class DisplayFile {
         }
     }
 }
+
+
+//NO OF LINES
